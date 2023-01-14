@@ -1,0 +1,22 @@
+{
+  "name": "misclint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "fast-folder-size": "^1.7.1",
+    "glob": "^8.0.3",
+    "ignore": "^5.2.4"
+  }
+}
