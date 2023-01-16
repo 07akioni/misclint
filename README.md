@@ -9,3 +9,5 @@ Lint some misc stuff:
 - directory name
 - file name
 - substring in file
+
+I'm tired of checking & preventing rubbish code & output at work. I think I need a tool to finish the chaos.
