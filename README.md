@@ -10,4 +10,4 @@ Lint some misc stuff:
 - file name
 - substring in file
 
-I'm tired of checking & preventing rubbish code & output at work. I think I need a tool to finish the chaos.
+I'm tired of checking & preventing shitty code & output at work. I think I need a tool to finish the chaos.
