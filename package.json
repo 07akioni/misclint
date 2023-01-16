@@ -2,9 +2,13 @@
   "name": "misclint",
   "version": "0.1.0",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "play": "tsx test.ts"
+    "play": "tsx test.ts",
+    "release": "rm -rf dist && pnpm run build"
   },
   "author": "07akioni",
   "license": "MIT",
