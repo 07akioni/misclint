@@ -61,6 +61,7 @@ export async function execute(config: Config) {
     }
   } catch (error) {
     console.error('internal error', error)
+    shouldExitNormally = false
   }
   if (!shouldExitNormally) {
     process.exit(1)
