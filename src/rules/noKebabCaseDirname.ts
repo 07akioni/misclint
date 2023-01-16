@@ -1,9 +1,17 @@
-import { defineRule } from '../defineRule'
+import { defineRule, Message } from '../defineRule'
 
-export const rule = defineRule(async (_, dirs) => {
+export const noKebabCaseDirname = defineRule('noKebabCaseDirname', ({ dirs }) => {
+  const messages: Message[] = []
   dirs.forEach((dir) => {
     if (dir.includes('-')) {
-      console.error('invalid dirname', dir)
+      messages.push({
+        level: 'error',
+        path: dir,
+        message: `directory name is invalid(kebab-case)`
+      })
     }
   })
+  return {
+    messages
+  }
 })

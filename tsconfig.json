@@ -13,5 +13,6 @@
     "declaration": true,
     "outDir": "dist",
     "esModuleInterop": true
-  }
+  },
+  "include": ["src", "test.ts"]
 }

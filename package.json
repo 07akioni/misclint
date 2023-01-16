@@ -4,19 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.build.json",
+    "play": "tsx test.ts"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/bluebird": "^3.5.38",
     "@types/glob": "^8.0.0",
     "@types/node": "^18.11.18",
+    "tsx": "^3.12.2",
     "typescript": "^4.9.4"
   },
   "dependencies": {
     "fast-folder-size": "^1.7.1",
-    "glob": "^8.0.3",
-    "ignore": "^5.2.4"
+    "glob": "^8.0.3"
   }
 }
