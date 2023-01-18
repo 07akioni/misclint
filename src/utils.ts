@@ -1,5 +1,9 @@
 export function formatMessage(scope: string, message: string) {
-  return `[mistlint/${scope}]: ${message}`
+  return `[misclint/${scope}]: ${message}`
+}
+
+export function formatInternalErrorMessage(scope: string, message: string) {
+  return `[misclint/${scope}]: internal error, ${message}`
 }
 
 export function defer() {

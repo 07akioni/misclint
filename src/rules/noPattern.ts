@@ -1,8 +1,4 @@
 import { defineRule, Message } from '../defineRule'
-import { promisify } from 'util'
-import fs from 'fs'
-
-const readFileAsync = promisify(fs.readFile)
 
 export const noPattern = defineRule<{ patterns: string[] }>(
   'noPattern',
@@ -11,12 +7,12 @@ export const noPattern = defineRule<{ patterns: string[] }>(
     await Promise.all(
       files.map((file) => {
         return (async () => {
-          const content = await readFileAsync(file)
+          const content = await file.ensureContent()
           params.patterns.some((pattern) => {
             if (content.includes(pattern)) {
               messages.push({
                 level: 'error',
-                path: file,
+                path: file.path,
                 message: `invalid pattern \`${pattern}\` exists`
               })
             }

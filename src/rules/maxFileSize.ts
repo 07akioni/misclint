@@ -1,9 +1,4 @@
-import { promisify } from 'util'
-import fs from 'fs'
 import { defineRule, type Message } from '../defineRule'
-import { formatMessage } from '../utils'
-
-const statAsync = promisify(fs.stat)
 
 export const maxFileSize = defineRule<{ size: number }>(
   'maxFileSize',
@@ -12,19 +7,11 @@ export const maxFileSize = defineRule<{ size: number }>(
     await Promise.all(
       files.map((file) => {
         return (async () => {
-          const fileSize = (await statAsync(file)).size
-          if (fileSize === undefined) {
-            throw new Error(
-              formatMessage(
-                'maxFileSize',
-                'internal error: fileSize is undefined'
-              )
-            )
-          }
+          const fileSize = await file.ensureSize()
           if (fileSize > params.size) {
             messages.push({
               level: 'error',
-              path: file,
+              path: file.path,
               message: `size ${fileSize} bytes exceeds ${params.size} bytes`
             })
           }

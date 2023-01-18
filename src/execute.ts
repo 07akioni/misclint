@@ -1,11 +1,12 @@
 import glob from 'glob'
 import fs from 'fs'
 import { promisify } from 'util'
-import { defer, formatMessage } from './utils'
+import { defer, formatInternalErrorMessage } from './utils'
 import type { Config } from './config'
 import { printDiagnostics } from './print'
 import { ruleExecutors } from './rules/index'
 import { RuleName } from './rules/types'
+import { makeDirHandle, makeFileHandle } from './fs'
 
 const statAsync = promisify(fs.stat)
 
@@ -25,9 +26,7 @@ export async function execute(config: Config) {
             if (error) {
               console.error(error)
               deferred.reject(
-                new Error(
-                  formatMessage('execute', 'internal error: glob error')
-                )
+                new Error(formatInternalErrorMessage('execute', 'glob error'))
               )
               return
             }
@@ -43,9 +42,9 @@ export async function execute(config: Config) {
             const { rules } = override
             for (const ruleName in rules) {
               const ruleExecutor = ruleExecutors[ruleName as RuleName]
-              const { messages } = await ruleExecutor({
-                files,
-                dirs,
+              const { messages } = await ruleExecutor.execute({
+                files: files.map(makeFileHandle),
+                dirs: dirs.map(makeDirHandle),
                 params: rules[ruleName as RuleName] as any
               })
               if (shouldExitNormally && messages.length) {
