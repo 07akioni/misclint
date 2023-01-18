@@ -1,9 +1,10 @@
 import glob from 'glob'
 import fs from 'fs'
 import { promisify } from 'util'
+import chalk from 'chalk'
 import { defer, formatInternalErrorMessage } from './utils'
 import type { Config } from './config'
-import { printDiagnostics } from './print'
+import { messageCollector } from './message'
 import { ruleExecutors } from './rules/index'
 import { RuleName } from './rules/types'
 import { makeDirHandle, makeFileHandle } from './fs'
@@ -11,7 +12,7 @@ import { makeDirHandle, makeFileHandle } from './fs'
 const statAsync = promisify(fs.stat)
 
 export async function execute(config: Config) {
-  let shouldExitNormally = true
+  let errorCount = 0
   try {
     for (const override of config.overrides) {
       const files = Array.isArray(override.files)
@@ -47,10 +48,10 @@ export async function execute(config: Config) {
                 dirs: dirs.map(makeDirHandle),
                 params: rules[ruleName as RuleName] as any
               })
-              if (shouldExitNormally && messages.length) {
-                shouldExitNormally = false
+
+              for (const message of messages) {
+                messageCollector.collect(message.path, ruleName, message)
               }
-              printDiagnostics(ruleName, messages)
             }
             deferred.resolve()
           }
@@ -58,11 +59,17 @@ export async function execute(config: Config) {
         await deferred.promise
       }
     }
+    errorCount = messageCollector.print().errorCount
   } catch (error) {
-    console.error('internal error', error)
-    shouldExitNormally = false
+    console.error(
+      formatInternalErrorMessage('execute', 'execute with internal error'),
+      error
+    )
   }
-  if (!shouldExitNormally) {
+  if (errorCount) {
+    console.log()
+    console.log(chalk.red(`\u2717 ${errorCount} errors`))
+    console.log()
     process.exit(1)
   }
 }

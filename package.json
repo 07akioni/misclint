@@ -21,7 +21,8 @@
   "dependencies": {
     "chalk": "^5.2.0",
     "fast-folder-size": "^1.7.1",
-    "glob": "^8.0.3"
+    "glob": "^8.0.3",
+    "natural-orderby": "^3.0.1"
   },
   "registry": "https://registry.npmjs.org"
 }
