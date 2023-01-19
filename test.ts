@@ -7,9 +7,7 @@ execute(
         files: 'src/**/*',
         rules: {
           noPattern: {
-            patterns: [
-              "from 'glob'"
-            ]
+            patterns: ["from 'glob'"]
           },
           maxFileSize: {
             size: 512
@@ -27,6 +25,9 @@ execute(
       {
         files: 'test/**/*',
         rules: {
+          requiredPattern: {
+            patterns: ['foo']
+          },
           noKebabCaseDirname: true,
           noKebabCaseFilename: true
         }

@@ -4,3 +4,4 @@ export type RuleName =
   | 'noKebabCaseDirname'
   | 'noKebabCaseFilename'
   | 'noPattern'
+  | 'requiredPattern'

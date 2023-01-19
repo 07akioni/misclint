@@ -4,6 +4,7 @@ import { maxFileSize } from './maxFileSize'
 import { noKebabCaseDirname } from './noKebabCaseDirname'
 import { noKebabCaseFilename } from './noKebabCaseFilename'
 import { noPattern } from './noPattern'
+import { requiredPattern } from './requiredPattern'
 import { RuleName } from './types'
 
 export const ruleExecutors = {
@@ -11,5 +12,6 @@ export const ruleExecutors = {
   maxFileSize,
   noKebabCaseDirname,
   noKebabCaseFilename,
-  noPattern
+  noPattern,
+  requiredPattern
 } satisfies Record<RuleName, Rule<any>>

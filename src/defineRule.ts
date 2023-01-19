@@ -1,6 +1,6 @@
 import type { Level } from './types'
 import type { RuleName } from './rules/types'
-import { DirHandle, FileHandle } from './fs';
+import { DirHandle, FileHandle } from './fs'
 
 export type Message = { level: Level; path: string; message: string }
 
@@ -23,4 +23,4 @@ export function defineRule<T>(name: RuleName, execute: Execute<T>): Rule<T> {
   return { name, execute }
 }
 
-export type ExtractExecuteParams<T> = T extends Execute<infer V> ? V : never
+export type ExtractExecuteParams<T> = T extends Rule<infer V> ? V : never
