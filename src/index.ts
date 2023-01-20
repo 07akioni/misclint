@@ -1,1 +1,1 @@
-export { executeConfig } from './execute'
+export { executeConfig } from './execute.js'

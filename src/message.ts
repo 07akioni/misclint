@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { compare } from 'natural-orderby'
-import { Message } from './defineRule'
+import { Message } from './defineRule.js'
 
 const sorter = compare()
 
@@ -30,7 +30,13 @@ class MessageCollector {
     messagesToSort.sort(([pathA], [pathB]) => {
       return sorter(pathA, pathB)
     })
+    let isFirstPrint = true
     for (const [path, ruleName2MessagesMap] of messagesToSort) {
+      if (!isFirstPrint) {
+        console.log()
+      } else {
+        isFirstPrint = false
+      }
       console.log(chalk.underline(path))
       for (const [ruleName, messages] of ruleName2MessagesMap) {
         for (const { level, message } of messages) {

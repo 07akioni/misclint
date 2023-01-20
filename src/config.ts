@@ -1,6 +1,6 @@
-import { ExtractExecuteParams } from './defineRule'
-import { ruleExecutors } from './rules'
-import type { RuleName } from './rules/types'
+import { ExtractExecuteParams } from './defineRule.js'
+import { ruleExecutors } from './rules/index.js'
+import type { RuleName } from './rules/types.js'
 
 export type Config = {
   overrides: Array<{

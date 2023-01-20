@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "ESNext",
     "lib": [],
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,

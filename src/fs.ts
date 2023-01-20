@@ -2,7 +2,7 @@ import fs from 'fs'
 import nodePath from 'path'
 import { promisify } from 'util'
 import fastFolderSize from 'fast-folder-size'
-import { formatInternalErrorMessage } from './utils'
+import { formatInternalErrorMessage } from './utils.js'
 
 const fastFolderSizeAsync = promisify(fastFolderSize)
 const readFileAsync = promisify(fs.readFile)

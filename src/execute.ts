@@ -2,12 +2,12 @@ import glob from 'glob'
 import fs from 'fs'
 import { promisify } from 'util'
 import chalk from 'chalk'
-import { defer, formatInternalErrorMessage } from './utils'
-import type { Config } from './config'
-import { messageCollector } from './message'
-import { ruleExecutors } from './rules/index'
-import { RuleName } from './rules/types'
-import { makeDirHandle, makeFileHandle } from './fs'
+import { defer, formatInternalErrorMessage } from './utils.js'
+import type { Config } from './config.js'
+import { messageCollector } from './message.js'
+import { ruleExecutors } from './rules/index.js'
+import { RuleName } from './rules/types.js'
+import { makeDirHandle, makeFileHandle } from './fs.js'
 
 const statAsync = promisify(fs.stat)
 

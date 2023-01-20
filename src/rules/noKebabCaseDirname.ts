@@ -1,4 +1,4 @@
-import { defineRule, Message } from '../defineRule'
+import { defineRule, Message } from '../defineRule.js'
 
 export const noKebabCaseDirname = defineRule(
   'noKebabCaseDirname',

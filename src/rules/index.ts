@@ -1,11 +1,11 @@
-import { Rule } from '../defineRule'
-import { maxDirectorySize } from './maxDirectorySize'
-import { maxFileSize } from './maxFileSize'
-import { noKebabCaseDirname } from './noKebabCaseDirname'
-import { noKebabCaseFilename } from './noKebabCaseFilename'
-import { noPattern } from './noPattern'
-import { requiredPattern } from './requiredPattern'
-import { RuleName } from './types'
+import { Rule } from '../defineRule.js'
+import { maxDirectorySize } from './maxDirectorySize.js'
+import { maxFileSize } from './maxFileSize.js'
+import { noKebabCaseDirname } from './noKebabCaseDirname.js'
+import { noKebabCaseFilename } from './noKebabCaseFilename.js'
+import { noPattern } from './noPattern.js'
+import { requiredPattern } from './requiredPattern.js'
+import { RuleName } from './types.js'
 
 export const ruleExecutors = {
   maxDirectorySize,

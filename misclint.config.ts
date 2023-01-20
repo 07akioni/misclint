@@ -1,4 +1,4 @@
-import { executeConfig } from './src/index'
+import { executeConfig } from './src/index.js'
 
 executeConfig({
   overrides: [

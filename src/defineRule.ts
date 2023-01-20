@@ -1,6 +1,6 @@
-import type { Level } from './types'
-import type { RuleName } from './rules/types'
-import { DirHandle, FileHandle } from './fs'
+import type { Level } from './types.js'
+import type { RuleName } from './rules/types.js'
+import { DirHandle, FileHandle } from './fs.js'
 
 export type Message = { level: Level; path: string; message: string }
 

@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "demo": "tsx test.ts",
+    "demo": "tsx misclint.config.ts",
     "release": "rm -rf dist && pnpm run build && pnpm publish"
   },
   "author": "07akioni",

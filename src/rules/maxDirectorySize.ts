@@ -1,4 +1,4 @@
-import { defineRule, type Message } from '../defineRule'
+import { defineRule, type Message } from '../defineRule.js'
 
 export const maxDirectorySize = defineRule<{ size: number }>(
   'maxDirectorySize',
