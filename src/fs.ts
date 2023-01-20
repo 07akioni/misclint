@@ -1,10 +1,9 @@
 import fs from 'fs'
 import nodePath from 'path'
 import { promisify } from 'util'
-import fastFolderSize from 'fast-folder-size'
+import getFolderSize from 'get-folder-size'
 import { formatInternalErrorMessage } from './utils.js'
 
-const fastFolderSizeAsync = promisify(fastFolderSize)
 const readFileAsync = promisify(fs.readFile)
 const statAsync = promisify(fs.stat)
 
@@ -76,7 +75,11 @@ export function makeDirHandle(path: string): DirHandle {
       let dirSize = dirSizeMap.get(path)
       if (dirSize === undefined) {
         try {
-          dirSize = await fastFolderSizeAsync(path)
+          dirSize = await (
+            getFolderSize as unknown as typeof getFolderSize.default
+          )
+            // Seems getFolderSize has some type error
+            .strict(path, undefined)
         } catch (error) {
           console.error(error)
           throw new Error(
