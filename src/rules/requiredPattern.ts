@@ -13,7 +13,7 @@ export const requiredPattern = defineRule<{ patterns: string[] }>(
               messages.push({
                 level: 'error',
                 path: file.path,
-                message: `required pattern \`${pattern}\` does't exist`
+                message: `required pattern \`${pattern}\` doesn't exist`
               })
             }
           })
