@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "play": "tsx test.ts",
+    "demo": "tsx test.ts",
     "release": "rm -rf dist && pnpm run build && pnpm publish"
   },
   "author": "07akioni",

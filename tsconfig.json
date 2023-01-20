@@ -16,5 +16,5 @@
     "outDir": "dist",
     "esModuleInterop": true
   },
-  "include": ["src", "test.ts"]
+  "include": ["src", "test", "misclint.config.ts"]
 }

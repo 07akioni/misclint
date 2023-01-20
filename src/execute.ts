@@ -73,3 +73,7 @@ export async function execute(config: Config) {
     process.exit(1)
   }
 }
+
+export async function executeConfig<T extends Config>(config: T) {
+  await execute(config)
+}

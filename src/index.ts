@@ -1,2 +1,1 @@
-export { execute } from './execute'
-export { defineConfig } from './config'
+export { executeConfig } from './execute'
