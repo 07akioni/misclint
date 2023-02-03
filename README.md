@@ -40,7 +40,8 @@ executeConfig({
           size: 51200
         }
       }
-    }
+    },
+    // ... other { files, rules }
   ]
 })
 ```
