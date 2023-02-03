@@ -3,6 +3,7 @@
   "version": "0.2.5",
   "main": "dist/index.js",
   "type": "module",
+  "description": "Lint some simple but useful usecases.",
   "files": [
     "dist"
   ],
@@ -26,5 +27,9 @@
     "glob": "^8.0.3",
     "natural-orderby": "^3.0.1"
   },
-  "registry": "https://registry.npmjs.org"
+  "registry": "https://registry.npmjs.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/07akioni/misclint.git"
+  }
 }
