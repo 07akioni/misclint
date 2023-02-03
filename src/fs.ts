@@ -1,15 +1,12 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 import nodePath from 'path'
-import { promisify } from 'util'
 import getFolderSize from 'get-folder-size'
 import { formatInternalErrorMessage } from './utils.js'
-
-const readFileAsync = promisify(fs.readFile)
-const statAsync = promisify(fs.stat)
 
 const fileContentMap = new Map<string, Buffer>()
 const fileSizeMap = new Map<string, number>()
 const dirSizeMap = new Map<string, number>()
+const dirSizeMapIgnoreFolderSize = new Map<string, number>()
 
 export type FileHandle = {
   name: string
@@ -26,7 +23,7 @@ export function makeFileHandle(path: string): FileHandle {
       let content = fileContentMap.get(path)
       if (content === undefined) {
         try {
-          content = await readFileAsync(path)
+          content = await fs.readFile(path)
           fileContentMap.set(path, content)
         } catch (error) {
           console.error(error)
@@ -44,7 +41,7 @@ export function makeFileHandle(path: string): FileHandle {
       let fileSize = fileSizeMap.get(path)
       if (fileSize === undefined) {
         try {
-          fileSize = (await statAsync(path)).size
+          fileSize = (await fs.stat(path)).size
           fileSizeMap.set(path, fileSize)
         } catch (error) {
           console.error(error)
@@ -64,22 +61,39 @@ export function makeFileHandle(path: string): FileHandle {
 export type DirHandle = {
   name: string
   path: string
-  ensureSize: () => Promise<number>
+  ensureSize: (options: { ignoreFolderSize: boolean }) => Promise<number>
+}
+
+const lstatIngoreDirectorySize = async (path: string, ...rest: any[]) => {
+  const lstatReturn = await fs.lstat(path, ...rest)
+  if (lstatReturn.isDirectory()) {
+    // typescript doesn't accept bigint for this
+    lstatReturn.size = 0n as any
+  }
+  return lstatReturn
 }
 
 export function makeDirHandle(path: string): DirHandle {
   return {
     name: nodePath.parse(path).name,
     path,
-    async ensureSize() {
-      let dirSize = dirSizeMap.get(path)
+    async ensureSize({ ignoreFolderSize }) {
+      const finalDirSizeMap = ignoreFolderSize
+        ? dirSizeMapIgnoreFolderSize
+        : dirSizeMap
+      let dirSize = finalDirSizeMap.get(path)
       if (dirSize === undefined) {
         try {
           dirSize = await (
             getFolderSize as unknown as typeof getFolderSize.default
           )
             // Seems getFolderSize has some type error
-            .strict(path, undefined)
+            .strict(path, {
+              fs: {
+                lstat: ignoreFolderSize ? lstatIngoreDirectorySize : fs.lstat,
+                readdir: fs.readdir
+              }
+            })
         } catch (error) {
           console.error(error)
           throw new Error(
@@ -97,7 +111,7 @@ export function makeDirHandle(path: string): DirHandle {
             )
           )
         }
-        dirSizeMap.set(path, dirSize)
+        finalDirSizeMap.set(path, dirSize)
       }
       return dirSize
     }

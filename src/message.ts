@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import { compare } from 'natural-orderby'
 import { Message } from './defineRule.js'
+import { Level } from './types.js'
 
 const sorter = compare()
 
@@ -19,10 +20,14 @@ class MessageCollector {
     const collectedMessages = ruleName2MessagesMap.get(ruleName)
     collectedMessages?.push(message)
   }
-  print(): {
+  print(levelToPrint: Level | undefined): {
+    count: number
+    infoCount: number
     errorCount: number
   } {
+    let count = 0
     let errorCount = 0
+    let infoCount = 0
     const messagesToSort: Array<[string, Map<string, Message[]>]> = []
     for (const pair of this.data) {
       messagesToSort.push(pair)
@@ -32,23 +37,39 @@ class MessageCollector {
     })
     let isFirstPrint = true
     for (const [path, ruleName2MessagesMap] of messagesToSort) {
-      if (!isFirstPrint) {
-        console.log()
-      } else {
-        isFirstPrint = false
-      }
-      console.log(chalk.underline(path))
+      let pathPrinted = false
       for (const [ruleName, messages] of ruleName2MessagesMap) {
-        for (const { level, message } of messages) {
+        for (const { level: messageLevel, message } of messages) {
+          if (levelToPrint !== undefined && levelToPrint !== messageLevel)
+            continue
+          if (!pathPrinted) {
+            if (!isFirstPrint) {
+              console.log()
+            } else {
+              isFirstPrint = false
+            }
+            console.log(chalk.underline(path))
+            pathPrinted = true
+          }
+          const isError = messageLevel === 'error'
+          if (isError) {
+            errorCount++
+          } else {
+            infoCount++
+          }
           console.log(
-            `  ${chalk.red(level)} ${message} ${chalk.gray(ruleName)}`
+            `  ${
+              isError ? chalk.red(messageLevel) : chalk.blue(messageLevel)
+            } ${message} ${chalk.gray(ruleName)}`
           )
-          errorCount++
+          count++
         }
       }
     }
     return {
-      errorCount
+      count,
+      errorCount,
+      infoCount
     }
   }
 }

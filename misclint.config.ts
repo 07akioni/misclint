@@ -17,7 +17,26 @@ executeConfig({
       files: 'src/rules',
       rules: {
         maxDirectorySize: {
+          ignoreFolderSize: true,
           size: 1024
+        }
+      }
+    },
+    {
+      files: 'src/rules',
+      rules: {
+        maxDirectorySize: {
+          size: 1024000,
+          showInfo: true
+        }
+      }
+    },
+    {
+      files: 'src/fs.ts',
+      rules: {
+        maxFileSize: {
+          size: 512000,
+          showInfo: true
         }
       }
     },

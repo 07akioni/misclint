@@ -12,7 +12,6 @@ import { makeDirHandle, makeFileHandle } from './fs.js'
 const statAsync = promisify(fs.stat)
 
 export async function execute(config: Config) {
-  let errorCount = 0
   try {
     for (const override of config.overrides) {
       const files = Array.isArray(override.files)
@@ -59,15 +58,19 @@ export async function execute(config: Config) {
         await deferred.promise
       }
     }
-    errorCount = messageCollector.print().errorCount
   } catch (error) {
     console.error(
       formatInternalErrorMessage('execute', 'execute with internal error'),
       error
     )
   }
-  if (errorCount) {
+  const { infoCount, errorCount } = messageCollector.print(undefined)
+  if (infoCount) {
     console.log()
+    console.log(chalk.blue(`◯ ${infoCount} info`))
+  }
+  if (errorCount) {
+    if (!infoCount) console.log()
     console.log(chalk.red(`\u2717 ${errorCount} errors`))
     console.log()
     process.exit(1)
